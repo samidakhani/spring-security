@@ -1,0 +1,31 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:utils="http://java.sun.com/jsf/composite/utils">
+<h:head>
+</h:head>
+<h:body>
+
+	<h:form id="loginForm" prependId="false">
+		<h:panelGroup>
+			<h:outputText value="Username" />
+			<p:spacer width="15px" />
+			<h:inputText id="username" name="username" />
+		</h:panelGroup>
+		<br />
+		<h:panelGroup>
+			<h:outputText value="Password" />
+			<p:spacer width="15px" />
+			<h:inputSecret id="password" name="password" />
+		</h:panelGroup>
+		<br />
+		<input type="checkbox" id="remember-me" name="remember-me" value="true" />
+		<br />
+		<p:commandButton value="Sign In"
+			action="#{loginBean.doAuthenticate()}" ajax="false"  />
+	</h:form>
+
+</h:body>
+</html>

@@ -1,0 +1,57 @@
+dn: ou=roles,dc=springframework,dc=org
+objectclass: top
+objectclass: organizationalUnit
+ou: roles
+
+dn: ou=people,dc=springframework,dc=org
+objectclass: top
+objectclass: organizationalUnit
+ou: people
+
+
+# Users
+
+dn: uid=sami,ou=people,dc=springframework,dc=org
+objectclass: top
+objectclass: person
+objectclass: organizationalPerson
+objectclass: inetOrgPerson
+cn: Sami
+uid: sami
+userPassword: sami
+
+dn: uid=suraj,ou=people,dc=springframework,dc=org
+objectclass: top
+objectclass: person
+objectclass: organizationalPerson
+objectclass: inetOrgPerson
+cn: Suraj
+uid: suraj
+userPassword: suraj
+
+dn: uid=ali,ou=people,dc=springframework,dc=org
+objectclass: top
+objectclass: person
+objectclass: organizationalPerson
+objectclass: inetOrgPerson
+cn: Ali
+uid: ali
+userPassword: ali
+
+
+# Roles
+
+dn: cn=USER,ou=roles,dc=springframework,dc=org
+objectclass: top
+objectclass: groupOfNames
+cn: USER
+member: uid=sami,ou=people,dc=springframework,dc=org
+member: uid=suraj,ou=people,dc=springframework,dc=org
+member: uid=ali,ou=people,dc=springframework,dc=org
+
+dn: cn=ADMIN,ou=roles,dc=springframework,dc=org
+objectclass: top
+objectclass: groupOfNames
+cn: ADMIN
+member: uid=sami,ou=people,dc=springframework,dc=org
+member: uid=suraj,ou=people,dc=springframework,dc=org

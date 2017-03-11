@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:utils="http://java.sun.com/jsf/composite/utils"
+	xmlns:sec="http://www.springframework.org/security/tags">
+<h:head>
+</h:head>
+<h:body>
+
+	<h:form>
+		<h:commandLink action="#{loginBean.doLogout()}" value="Logout" />
+
+		<p>Welcome to spring security</p>
+
+		<sec:authorize access="hasRole('ROLE_ADMIN')">
+			<h:commandLink action="admin/admin.xhtml?faces-redirect=true"
+				value="Admin Page" />
+			<br /><br />
+		</sec:authorize>
+
+		<!-- Remeber me check, Notworking both methods-->
+		<!--  https://www.mkyong.com/spring-security/spring-security-check-if-user-is-from-remember-me-cookie/
+		
+		<sec:authorize access="isRememberMe()">
+			<h2># This user is login by "Remember Me Cookies".</h2>
+	    </sec:authorize>
+		
+		<h:outputText rendered="#{loggedInBean.isRememberMeAuthenticated()}" value="Using Remember me" />
+		
+		<br /><br />
+		
+		 -->
+		
+		
+		<h:commandLink action="users.xhtml?faces-redirect=true"
+			value="Users Page" /> 
+		<br /><br />
+			
+		<h:commandLink action="expression.xhtml?faces-redirect=true"
+				value="Expression Page" />
+	    <br /><br />
+	    
+	    <h:commandLink action="usersList.xhtml?faces-redirect=true"
+				value="UsersList Page" />
+		<br/><br/>
+		
+		
+	</h:form>
+
+
+
+
+</h:body>
+</html>

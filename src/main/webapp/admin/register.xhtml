@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:utils="http://java.sun.com/jsf/composite/utils"
+	xmlns:sec="http://www.springframework.org/security/tags">
+<h:head>
+</h:head>
+<h:body>
+
+	<h:form id="registerForm" prependId="false">
+	   <h:panelGroup>
+			<h:outputText value="Username" />
+			<p:spacer width="15px" />
+			<h:inputText id="r_username" value="#{jpaRegistrationManagedBean.user.username}"  />
+		</h:panelGroup>
+		<br />
+		<h:panelGroup>
+			<h:outputText value="Password" />
+			<p:spacer width="15px" />
+			<h:inputSecret id="r_password" value="#{jpaRegistrationManagedBean.user.password}"  />
+		</h:panelGroup>
+		<br />
+		<p:commandButton value="Register"
+			action="#{jpaRegistrationManagedBean.registerUser()}" ajax="false"  />
+	</h:form>
+	
+</h:body>
+</html>

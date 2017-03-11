@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:utils="http://java.sun.com/jsf/composite/utils"
+	xmlns:sec="http://www.springframework.org/security/tags">
+<h:head>
+</h:head>
+<h:body>
+
+	<h:form>
+		<h:commandLink action="#{loginBean.doLogout()}" value="Logout" />
+
+		<f:metadata>
+			<f:event type="preRenderView"
+				listener="#{userProfileManagedBean.retrieveUsers}" />
+		</f:metadata>
+
+		<br />
+
+
+		<p:dataTable var="user" value="#{userProfileManagedBean.users}">
+
+			<f:facet name="header">
+				Users
+			</f:facet>
+
+			<p:column>
+				<f:facet name="header">
+					<h:outputText value="User Name" />
+				</f:facet>
+				<h:outputText value="#{user.username}" />
+			</p:column>
+
+			<p:column>
+				<f:facet name="header">
+					<h:outputText value="First Name" />
+				</f:facet>
+				<h:outputText value="#{user.firstname}" />
+			</p:column>
+
+			<p:column>
+				<f:facet name="header">
+					<h:outputText value="Last Name" />
+				</f:facet>
+				<h:outputText value="#{user.lastname}" />
+			</p:column>
+
+			<p:column>
+				<f:facet name="header">
+					<h:outputText value="Age" />
+				</f:facet>
+				<h:outputText value="#{user.age}" />
+			</p:column>
+
+		</p:dataTable>
+
+
+		<br />
+		<br />
+		<p:outputLabel value="#{userProfileManagedBean.user.username}" />
+		<br />
+		<p:commandButton value="Submit" process="@this" update="@form"
+			action="#{userProfileManagedBean.retriveUser}" />
+
+
+
+
+	</h:form>
+
+
+</h:body>
+</html>

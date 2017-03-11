@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<beans:beans xmlns="http://www.springframework.org/schema/security"
+	xmlns:beans="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-4.3.xsd
+								 http://www.springframework.org/schema/security http://www.springframework.org/schema/security/spring-security-4.2.xsd">
+
+	<beans:import resource="spring-database.xml" />
+
+	<http security="none" use-expressions="true" pattern="/javax.faces.resource/**">
+	</http>
+
+	<http use-expressions="true">
+		<csrf disabled="true" />
+
+		<intercept-url pattern="/login.xhtml" access="isAnonymous()" />
+		<intercept-url pattern="/admin/register.xhtml" access="isAnonymous()" />
+		<intercept-url pattern="/resources/css/**" access="isAnonymous()" />
+		<intercept-url pattern="/open.xhtml" access="isAuthenticated()" /> 
+		<intercept-url pattern="/usersList.xhtml" access="isAuthenticated()" />
+		<!-- Check with request method type -->
+		<!-- 
+		<intercept-url pattern="/expression.xhtml" access="request.method == 'POST'" />
+		 -->
+		 
+		<!-- For Remember me avoidance -->
+		<!--  
+			<intercept-url pattern="/admin/**" access="hasRole('ROLE_ADMIN') and isFullyAuthenticated()" /> 
+		-->
+		<intercept-url pattern="/admin/**" access="hasRole('ROLE_ADMIN')" />
+		<intercept-url pattern="/**" access="hasRole('ROLE_USER')" />
+		
+		<form-login login-page="/login.xhtml" default-target-url="/index.xhtml"
+			authentication-failure-url="/login.xhtml?error=true"
+			username-parameter="username" password-parameter="password"
+			login-processing-url="/j_spring_security_check" />
+			
+		<!-- Cookie based -->
+		<!-- 
+		<remember-me key="myAppKey" remember-me-parameter="remember-me" token-validity-seconds="6400" />
+		 -->	
+		 
+		 <!-- Persistence based -->
+		  
+		<remember-me key="myAppKey" remember-me-parameter="remember-me" token-validity-seconds="6400" data-source-ref="dataSource"/>
+		
+
+		<logout logout-url="/logout.xhtml" logout-success-url="/login.xhtml"
+			invalidate-session="true" />
+
+	</http>
+	
+	<!--  For method level authorization -->
+	<global-method-security secured-annotations="enabled" pre-post-annotations="enabled" />
+
+	 <authentication-manager> 
+	 
+	 	<!-- Only Authentication  - Users to be found only at one node. -->
+	 	<!-- <ldap-authentication-provider user-dn-pattern="uid={0},ou=people" />  -->
+	 	
+	 	<!-- Authentication and Authorization -->
+	 	<ldap-authentication-provider 
+	 			user-search-base="ou=people" user-search-filter="uid={0}"
+	 			group-search-base="ou=roles" group-search-filter="member={0}" role-prefix="ROLE_" />
+	 	
+		
+		<!-- JPA based - customized user service
+		 <authentication-provider user-service-ref="customUserService"> 		 
+		 </authentication-provider> 
+		 -->
+		 
+		 <!-- <authentication-provider>  -->
+			<!-- In Memory database -->
+			<!-- 
+			<user-service>
+				<user name="sami" password="sami" authorities="ROLE_USER,ROLE_ADMIN" />
+				<user name="suraj" password="suraj" authorities="ROLE_USER" />
+			</user-service>
+			 -->
+
+			<!-- JDBC connection -->
+			<!-- <jdbc-user-service data-source-ref="dataSource" /> -->
+			
+		<!-- </authentication-provider> -->
+		 
+
+		
+	</authentication-manager>
+	
+	<!-- Embeded LDAP Server  - Uses ldif file in classpath -->
+	<!-- 
+	<ldap-server id="ldapServer" root="dc=springframework,dc=org" ldif="users.ldif" />
+	-->
+	
+	<!-- External LDAP Server-ApacheDS with Anonymous access-->
+	<!-- 
+	<ldap-server id="ldapServer"  url="ldap://localhost:10389/dc=springframework,dc=org"  />
+	 -->
+	
+	<!-- External LDAP Server-ApacheDS  with non Anonymous access (default password is used)-->
+	<ldap-server id="ldapServer"  url="ldap://localhost:10389/dc=springframework,dc=org"  
+						manager-dn="uid=admin,ou=system"  manager-password="secret" />
+	<ldap-user-service server-ref="ldapServer" user-search-filter="uid={0}" />
+	
+
+</beans:beans>

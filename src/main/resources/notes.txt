@@ -1,0 +1,27 @@
+1. Types of remember me mechanism
+	1. Cookie based. (Simple Hash-Based Token)
+		Not secure, as user-name and password are used to generate cookie string.
+	2. Persistence storage based. (Persistent Token Approach)
+			More secure. Only user-name is part of cookie. 
+			https://www.mkyong.com/spring-security/spring-security-remember-me-example/
+2. Default session expiration time is 30 minutes.
+3. Default remember-me cookie, in spring security expiration time is 2 weeks.
+4. The following is the class hierarchy structure in spring security
+                UserDetails(interface) ----> User (class)
+                
+                UserDetailsService(interface) ----> UserDetailsManager(interface)
+                                                           -----> InMemoryUserDetailsManager(class)
+                                                           -----> JdbcUserDetailsManager(class)
+                                                           -----> LdapUserDetailsManager(class)
+                                              ----> LdapUserDetailsService(class)
+                                                           
+                                                           
+                GrantedAuthority(interface)
+                AuthorityUtils(class) -----> createAuthorityList(method)
+5. Security expressions
+       http://docs.spring.io/spring-security/site/docs/current/reference/html/el-access.html   
+6. Authorization Levels
+    1. Page level
+    2. Section or Field level on page
+    3. Method level(@Secured or @PreAuthorize)    
+         
